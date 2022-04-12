@@ -15,15 +15,48 @@ function App() {
 		},
 	]);
 
+	const [todoInput, setTodoInput] = useState('');
+	const [todoId, setTodoId] = useState(3);
+
+	const handleInput = (event) => {
+		setTodoInput(event.target.value);
+	};
+
+	const addTodo = (event) => {
+		// Prevent form from trying to submit to a server (and changing the URI)
+		event.preventDefault();
+
+		// Prevent adding of empty strings and whitespaces
+		if (todoInput.trim().length === 0) {
+			return;
+		}
+
+		setTodos([
+			...todos,
+			{
+				id: todoId,
+				title: todoInput,
+				isComplete: false,
+			},
+		]);
+
+		// Revert back to an empty string after submitting the form
+		setTodoInput('');
+		// Increment our id after each addition
+		setTodoId((prevTodoId) => prevTodoId + 1);
+	};
+
 	return (
 		<div className="todo-app-container">
 			<div className="todo-app">
 				<h2>Todo App</h2>
-				<form action="#">
+				<form action="#" onSubmit={addTodo}>
 					<input
 						type="text"
 						className="todo-input"
 						placeholder="Add item to the list"
+						value={todoInput}
+						onChange={handleInput}
 					/>
 				</form>
 				<ul className="todo-list">
