@@ -40,10 +40,14 @@ function App() {
 			},
 		]);
 
-		// Revert back to an empty string after submitting the form
+		// Revert to an empty string after submitting the form
 		setTodoInput('');
 		// Increment our id after each addition
 		setTodoId((prevTodoId) => prevTodoId + 1);
+	};
+
+	const deleteTodo = (id) => {
+		setTodos([...todos].filter((todo) => id !== todo.id));
 	};
 
 	return (
@@ -61,18 +65,24 @@ function App() {
 				</form>
 				<ul className="todo-list">
 					{todos.map((todo) => (
-						<li className="todo-item-container">
+						<li className="todo-item-container" key={todo.id}>
 							<div className="todo-item">
 								<input type="checkbox" className="checkbox" />
 								<span className="todo-item-label">
 									{todo.title}
 								</span>
 							</div>
-							<button className="x-button">
+							<button
+								className="x-button"
+								// Make sure to use a callback function to avoid the deleteTodo function to run
+								// when the button gets rendered (only necessary when the method/func has a parameter)
+								// In this case: parameter = (todo.id)
+								onClick={() => deleteTodo(todo.id)}
+							>
 								<svg
 									className="x-button-icon"
 									fill="none"
-									viewbox="0 0 24 24"
+									viewBox="0 0 24 24"
 									stroke="currentColor"
 								>
 									<path
