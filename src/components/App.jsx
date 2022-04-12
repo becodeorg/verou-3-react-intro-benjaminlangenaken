@@ -89,11 +89,14 @@ function App() {
 		setTodos(updatedTodos);
 	};
 
-	const cancelEdit = (event) => {
+	const cancelEdit = (id) => {
 		const updatedTodos = todos.map((todo) => {
-			todo.isEditing = false;
+			if (todo.id === id) {
+				todo.isEditing = false;
+			}
+			return todo;
 		});
-		setTodos([...todos]);
+		setTodos(updatedTodos);
 	};
 
 	return (
@@ -154,7 +157,7 @@ function App() {
 											// Cancel editing when pressing Escape
 											// TODO: Escape key returns previous value (WIP)
 											else if (event.key === 'Escape') {
-												cancelEdit(event);
+												cancelEdit(todo.id);
 											}
 										}}
 									/>
