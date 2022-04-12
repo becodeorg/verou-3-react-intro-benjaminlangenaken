@@ -50,6 +50,16 @@ function App() {
 		setTodos([...todos].filter((todo) => id !== todo.id));
 	};
 
+	const completeTodo = (id) => {
+		const updatedTodos = todos.map((todo) => {
+			if (todo.id === id) {
+				todo.isComplete = !todo.isComplete;
+			}
+			return todo;
+		});
+		setTodos(updatedTodos);
+	};
+
 	return (
 		<div className="todo-app-container">
 			<div className="todo-app">
@@ -67,8 +77,21 @@ function App() {
 					{todos.map((todo) => (
 						<li className="todo-item-container" key={todo.id}>
 							<div className="todo-item">
-								<input type="checkbox" className="checkbox" />
-								<span className="todo-item-label">
+								<input
+									type="checkbox"
+									className="checkbox"
+									// Make sure to use a callback function to avoid the deleteTodo function to run
+									// when the button gets rendered (only necessary when the method/func has a parameter)
+									// In this case: parameter = (todo.id)
+									onChange={() => completeTodo(todo.id)}
+									// If the todo already has isComplete=true -> make sure the checkbox will be checked
+									checked={todo.isComplete ? true : false}
+								/>
+								<span
+									className={`todo-item-label ${
+										todo.isComplete ? 'line-through' : ''
+									}`}
+								>
 									{todo.title}
 								</span>
 							</div>
