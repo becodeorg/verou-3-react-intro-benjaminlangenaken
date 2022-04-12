@@ -7,11 +7,13 @@ function App() {
 			id: 1,
 			title: 'Example item 1',
 			isComplete: false,
+			isEditing: false,
 		},
 		{
 			id: 2,
 			title: 'Example item 2',
 			isComplete: true,
+			isEditing: false,
 		},
 	]);
 
@@ -37,6 +39,7 @@ function App() {
 				id: todoId,
 				title: todoInput,
 				isComplete: false,
+				isEditing: false,
 			},
 		]);
 
@@ -58,6 +61,39 @@ function App() {
 			return todo;
 		});
 		setTodos(updatedTodos);
+	};
+
+	const editTodo = (id) => {
+		const updatedTodos = todos.map((todo) => {
+			if (todo.id === id) {
+				todo.isEditing = true;
+			}
+			return todo;
+		});
+		setTodos(updatedTodos);
+	};
+
+	const updateTodo = (event, id) => {
+		const updatedTodos = todos.map((todo) => {
+			if (todo.id === id) {
+				// Prevent adding of empty strings and whitespaces
+				if (event.target.value.trim().length === 0) {
+					todo.isEditing = false;
+					return todo;
+				}
+				todo.title = event.target.value;
+				todo.isEditing = false;
+			}
+			return todo;
+		});
+		setTodos(updatedTodos);
+	};
+
+	const cancelEdit = (event) => {
+		const updatedTodos = todos.map((todo) => {
+			todo.isEditing = false;
+		});
+		setTodos([...todos]);
 	};
 
 	return (
@@ -87,19 +123,45 @@ function App() {
 									// If the todo already has isComplete=true -> make sure the checkbox will be checked
 									checked={todo.isComplete ? true : false}
 								/>
-								<span
-									className={`todo-item-label ${
-										todo.isComplete ? 'line-through' : ''
-									}`}
-								>
-									{todo.title}
-								</span>
+								{!todo.isEditing ? (
+									<span
+										className={`todo-item-label ${
+											todo.isComplete
+												? 'line-through'
+												: ''
+										}`}
+										onDoubleClick={() => editTodo(todo.id)}
+									>
+										{todo.title}
+									</span>
+								) : (
+									<input
+										type="text"
+										className="todo-item-input"
+										// Make sure we can type inside the input field:
+										// --> Use defaultValue instead of value for our title element
+										defaultValue={todo.title}
+										autoFocus
+										// Commit new values when clicking outside of input field
+										onBlur={(event) =>
+											updateTodo(event, todo.id)
+										}
+										onKeyDown={(event) => {
+											//Commit new values when pressing Enter
+											if (event.key === 'Enter') {
+												updateTodo(event, todo.id);
+											}
+											// Cancel editing when pressing Escape
+											// TODO: Escape key returns previous value (WIP)
+											else if (event.key === 'Escape') {
+												cancelEdit(event);
+											}
+										}}
+									/>
+								)}
 							</div>
 							<button
 								className="x-button"
-								// Make sure to use a callback function to avoid the deleteTodo function to run
-								// when the button gets rendered (only necessary when the method/func has a parameter)
-								// In this case: parameter = (todo.id)
 								onClick={() => deleteTodo(todo.id)}
 							>
 								<svg
