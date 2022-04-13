@@ -101,3 +101,19 @@ h2 {
 .checkbox {
 	background: #faf9f9;
 }
+
+.no-todos-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 24px;
+}
+
+.no-todos-container svg {
+	width: 150px;
+	height: 150px;
+}
+
+.no-todos-container p {
+	margin-top: 24px;
+}
