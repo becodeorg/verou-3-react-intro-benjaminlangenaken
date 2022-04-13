@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 // Insert props so TodoForm has access to the function (addTodo) from parent
 const TodoForm = (props) => {
@@ -35,6 +36,13 @@ const TodoForm = (props) => {
 			/>
 		</form>
 	);
+};
+
+// Make sure the correct prop type will be used thanks to propTypes package
+// Error example:
+// Warning: Failed prop type: Invalid prop `addTodo` of type `string` supplied to `TodoForm`, expected `function`
+TodoForm.propTypes = {
+	addTodo: PropTypes.func.isRequired,
 };
 
 export default TodoForm;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const TodoList = (props) => {
 	return (
@@ -73,6 +74,16 @@ const TodoList = (props) => {
 			))}
 		</ul>
 	);
+};
+
+// Make sure the correct prop type will be used thanks to propTypes package
+TodoList.propTypes = {
+	todos: PropTypes.array.isRequired,
+	completeTodo: PropTypes.func.isRequired,
+	editTodo: PropTypes.func.isRequired,
+	updateTodo: PropTypes.func.isRequired,
+	cancelEdit: PropTypes.func.isRequired,
+	deleteTodo: PropTypes.func.isRequired,
 };
 
 export default TodoList;
