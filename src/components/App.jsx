@@ -81,10 +81,38 @@ function App() {
 		const updatedTodos = todos.map((todo) => {
 			if (todo.id === id) {
 				todo.isEditing = false;
+				return todo;
 			}
 			return todo;
 		});
 		setTodos(updatedTodos);
+	};
+
+	const remainingTodos = () => {
+		return todos.filter((todo) => !todo.isComplete).length;
+	};
+
+	const completeAllTodos = () => {
+		const updatedTodos = todos.map((todo) => {
+			todo.isComplete = true;
+			return todo;
+		});
+		setTodos(updatedTodos);
+	};
+
+	const clearCompleted = () => {
+		setTodos([...todos].filter((todo) => !todo.isComplete));
+	};
+	const [filter, setFilter] = useState('all');
+
+	const todosFiltered = (filter) => {
+		if (filter === 'all') {
+			return todos;
+		} else if (filter === 'active') {
+			return todos.filter((todo) => !todo.isComplete);
+		} else if (filter === 'completed') {
+			return todos.filter((todo) => todo.isComplete);
+		}
 	};
 
 	return (
@@ -94,18 +122,20 @@ function App() {
 				{/*Add function as a prop so TodoForm has access to it*/}
 				<TodoForm addTodo={addTodo} />
 				{todos.length > 0 ? (
-					// Add parent element <> (empty tags) for when we will add more elements inside the condition
-					// Otherwise React will trow an error
-					<>
-						<TodoList
-							todos={todos}
-							completeTodo={completeTodo}
-							editTodo={editTodo}
-							updateTodo={updateTodo}
-							cancelEdit={cancelEdit}
-							deleteTodo={deleteTodo}
-						/>
-					</>
+					<TodoList
+						todos={todos}
+						completeTodo={completeTodo}
+						editTodo={editTodo}
+						updateTodo={updateTodo}
+						cancelEdit={cancelEdit}
+						deleteTodo={deleteTodo}
+						remainingTodos={remainingTodos}
+						clearCompleted={clearCompleted}
+						completeAllTodos={completeAllTodos}
+						todosFiltered={todosFiltered}
+						filter={filter}
+						setFilter={setFilter}
+					/>
 				) : (
 					<NoTodos />
 				)}
