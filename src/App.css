@@ -67,6 +67,10 @@ h2 {
 	width: 100%;
 }
 
+.todo-item-label:hover {
+	color: #343645;
+}
+
 .todo-item-input {
 	margin-left: 8px;
 	width: 100%;
@@ -84,13 +88,13 @@ h2 {
 
 .x-button {
 	background: #ffd6ba;
-	color: #555b6e;
+	color: #89b0ae;
 	border: none;
 	cursor: pointer;
 }
 
 .x-button:hover {
-	color: #023047;
+	color: #555b6e;
 }
 
 .x-button-icon {
@@ -116,4 +120,49 @@ h2 {
 
 .no-todos-container p {
 	margin-top: 24px;
+}
+
+.check-all-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #555b6e;
+	margin-top: 24px;
+	padding-top: 16px;
+	border-top: 1px solid #89b0ae;
+}
+
+.other-buttons-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #555b6e;
+	margin-top: 24px;
+	padding-top: 16px;
+	border-top: 1px solid #89b0ae;
+}
+
+.button {
+	color: #555b6e;
+	font-size: 14px;
+	background: #ffd6ba;
+	border: 1px solid #89b0ae;
+	padding: 6px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.button:hover {
+	color: #faf9f9;
+	background: #89b0ae;
+}
+
+.filter-button {
+	background: #ffd6ba;
+	border: 1px solid #ffd6ba;
+}
+
+.filter-button-active {
+	border: 1px solid #89b0ae;
+	/*font-weight: bolder;*/
 }
