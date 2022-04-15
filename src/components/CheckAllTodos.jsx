@@ -9,13 +9,13 @@ const CheckAllTodos = (props) => {
 					Check all
 				</div>
 			</div>
-			<span>{props.remainingTodos()} items remaining</span>
+			<span>{props.remainingTodos} items remaining</span>
 		</div>
 	);
 };
 
 CheckAllTodos.propTypes = {
-	remainingTodos: PropTypes.func.isRequired,
+	remainingTodos: PropTypes.number.isRequired,
 	completeAllTodos: PropTypes.func.isRequired,
 };
 

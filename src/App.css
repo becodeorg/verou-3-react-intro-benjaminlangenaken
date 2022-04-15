@@ -31,6 +31,7 @@ body {
 h2 {
 	font-size: 24px;
 	font-weight: bold;
+	margin: 0;
 }
 
 .todo-input {
@@ -64,11 +65,10 @@ h2 {
 
 .todo-item-label {
 	margin-left: 16px;
-	width: 100%;
 }
 
 .todo-item-label:hover {
-	color: #343645;
+	font-weight: bolder;
 }
 
 .todo-item-input {
@@ -165,4 +165,12 @@ h2 {
 .filter-button-active {
 	border: 1px solid #89b0ae;
 	/*font-weight: bolder;*/
+}
+
+.name-container {
+	margin-bottom: 24px;
+}
+
+.name-label {
+	margin-top: 16px;
 }
