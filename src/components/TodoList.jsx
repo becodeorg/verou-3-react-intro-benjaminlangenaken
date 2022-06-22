@@ -85,24 +85,45 @@ const TodoList = (props) => {
 				))}
 			</ul>
 
-			{/*Prop drilling from higher-level component to lower-level component*/}
-			<CheckAllTodos
-				remainingTodos={props.remainingTodos}
-				completeAllTodos={props.completeAllTodos}
-			/>
-
-			<div className="other-buttons-container">
-				<TodoFilters
-					filter={props.filter}
-					setFilter={props.setFilter}
-				/>
-
-				<div>
-					<button onClick={props.clearCompleted} className="button">
-						Clear completed
-					</button>
-				</div>
+			<div className="toggles-container">
+				<button
+					className="button"
+					onClick={() =>
+						props.setFeaturesVisible(
+							(prevFeaturesVisible) => !prevFeaturesVisible
+						)
+					}
+				>
+					+ Additional features
+				</button>
 			</div>
+
+			{props.featuresVisible && (
+				/*Prop drilling from higher-level component to lower-level component*/
+				<CheckAllTodos
+					remainingTodos={props.remainingTodos}
+					completeAllTodos={props.completeAllTodos}
+					handleClick={props.handleClick}
+				/>
+			)}
+
+			{props.featuresVisible && (
+				<div className="other-buttons-container">
+					<TodoFilters
+						filter={props.filter}
+						setFilter={props.setFilter}
+					/>
+
+					<div>
+						<button
+							onClick={props.clearCompleted}
+							className="button"
+						>
+							Clear completed
+						</button>
+					</div>
+				</div>
+			)}
 		</>
 	);
 };
@@ -120,6 +141,8 @@ TodoList.propTypes = {
 	clearCompleted: PropTypes.func.isRequired,
 	filter: PropTypes.string.isRequired,
 	setFilter: PropTypes.func.isRequired,
+	featuresVisible: PropTypes.bool.isRequired,
+	setFeaturesVisible: PropTypes.func.isRequired,
 };
 
 export default TodoList;

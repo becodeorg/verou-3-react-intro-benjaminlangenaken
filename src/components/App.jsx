@@ -149,6 +149,14 @@ function App() {
 		nameInputElement.current.focus();
 	}, []);
 
+	const [featuresVisible, setFeaturesVisible] = useState(false);
+
+	// Store username and todos in localStorage, so the data remains after page refresh
+	// const handleName = (event) => {
+	// addName(event);
+	// localStorage.setItem('name', JSON.stringify(event.target.value));
+	// };
+
 	return (
 		<div className="todo-app-container">
 			<div className="todo-app">
