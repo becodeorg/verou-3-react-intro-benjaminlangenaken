@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import CheckAllTodos from './CheckAllTodos';
 import TodoFilters from './TodoFilters';
@@ -23,9 +23,10 @@ const TodoList = (props) => {
 								// when the button gets rendered (only necessary when the method/func has a parameter)
 								// In this case: parameter = (todo.id)
 								onChange={() => props.completeTodo(todo.id)}
-								// If the todo already has isComplete=true -> make sure the checkbox will be checked
+								// If the todo already has isComplete = true -> make sure the checkbox will be checked
 								checked={todo.isComplete ? true : false}
 							/>
+							{/*Make input field visible instead of <span> on double click <span> element*/}
 							{!todo.isEditing ? (
 								<span
 									className={`todo-item-label ${
@@ -54,8 +55,7 @@ const TodoList = (props) => {
 										if (event.key === 'Enter') {
 											props.updateTodo(event, todo.id);
 										}
-										// Cancel editing when pressing Escape
-										// TODO: Escape key returns previous value (WIP)
+										// Cancel editing when pressing Escape (return previous value)
 										else if (event.key === 'Escape') {
 											handleEscape(todo.id);
 										}

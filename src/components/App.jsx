@@ -41,11 +41,14 @@ function App() {
 
 	const addTodo = (titleString) => {
 		setTodos([
+			// Use spread operator (...todos) inside the array to add on new value after the already existing ones
+			// Similar to array.push
 			...todos,
 			{
 				id: todoId,
 				title: titleString,
 				isComplete: false,
+				// Add isEditing property to make input field visible instead of <span> element
 				isEditing: false,
 			},
 		]);
@@ -55,10 +58,12 @@ function App() {
 	};
 
 	const deleteTodo = (id) => {
+		// Only keep the items where the id differs from the current id
 		setTodos([...todos].filter((todo) => id !== todo.id));
 	};
 
 	const completeTodo = (id) => {
+		// Go through list of todos and mark the current id as complete
 		const updatedTodos = todos.map((todo) => {
 			if (todo.id === id) {
 				todo.isComplete = !todo.isComplete;

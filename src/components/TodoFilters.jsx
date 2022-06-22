@@ -8,6 +8,7 @@ const TodoFilters = (props) => {
 				onClick={() => {
 					props.setFilter('all');
 				}}
+				// Add additional class 'filter-button-active' when filter = 'all'
 				className={`button filter-button ${
 					props.filter === 'all' ? 'filter-button-active' : ''
 				}`}
