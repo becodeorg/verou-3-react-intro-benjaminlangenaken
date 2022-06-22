@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import '../App.css';
 import NoTodos from './NoTodos';
 import TodoForm from './TodoForm';
@@ -98,7 +98,6 @@ function App() {
 		const updatedTodos = todos.map((todo) => {
 			if (todo.id === id) {
 				todo.isEditing = false;
-				return todo;
 			}
 			return todo;
 		});
@@ -117,7 +116,7 @@ function App() {
 
 	const completeAllTodos = () => {
 		const updatedTodos = todos.map((todo) => {
-			todo.isComplete = true;
+			todo.isComplete = !todo.isComplete;
 			return todo;
 		});
 		setTodos(updatedTodos);
@@ -126,6 +125,7 @@ function App() {
 	const clearCompleted = () => {
 		setTodos([...todos].filter((todo) => !todo.isComplete));
 	};
+
 	const [filter, setFilter] = useState('all');
 
 	const todosFiltered = (filter) => {
@@ -158,17 +158,10 @@ function App() {
 								defaultValue={name}
 								autoFocus
 								ref={nameInputElement}
-								// Commit new values when clicking outside of input field
-								onBlur={(event) => addName(event)}
 								onKeyDown={(event) => {
 									//Commit new values when pressing Enter
 									if (event.key === 'Enter') {
 										addName(event);
-									}
-									// Cancel editing when pressing Escape
-									// TODO: Escape key returns previous value (WIP)
-									else if (event.key === 'Escape') {
-										handleEscape();
 									}
 								}}
 							/>
@@ -178,14 +171,12 @@ function App() {
 					<h2>{name}'s Todo App</h2>
 				)}
 
-				{!name ? (
-					''
-				) : (
+				{name && (
 					/*Add addTodo function as a prop so TodoForm has access to it*/
 					<TodoForm addTodo={addTodo} />
 				)}
 
-				{name && todos.length > 0 ? (
+				{name && todos.length > 0 && (
 					<TodoList
 						todos={todos}
 						completeTodo={completeTodo}
@@ -199,12 +190,12 @@ function App() {
 						todosFiltered={todosFiltered}
 						filter={filter}
 						setFilter={setFilter}
+						featuresVisible={featuresVisible}
+						setFeaturesVisible={setFeaturesVisible}
 					/>
-				) : (
-					''
 				)}
 
-				{name && todos.length === 0 ? <NoTodos /> : ''}
+				{name && todos.length === 0 && <NoTodos />}
 			</div>
 		</div>
 	);

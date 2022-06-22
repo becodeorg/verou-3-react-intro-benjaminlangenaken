@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 
 // Insert props so TodoForm has access to the function (addTodo) from parent
 const TodoForm = (props) => {
+	const todoInputElement = useRef(null);
+
+	// UseEffect runs based on the chosen dependencies:
+	// Ex: [todos], only run when todos get updated
+	// Ex: [], only run when the component mounts
+	// In the code below we focus
+	useEffect(() => {
+		todoInputElement.current.focus();
+	}, []);
+
 	const [todoInput, setTodoInput] = useState('');
 
 	const handleInput = (event) => {
@@ -33,6 +43,9 @@ const TodoForm = (props) => {
 				placeholder="Add item to the list"
 				value={todoInput}
 				onChange={handleInput}
+				// Add useRef hook to reference the name input field/DOM element
+				// Example usage: Add button with onClick={() => todoInputElement.current.focus()} --> focus the input field
+				ref={todoInputElement}
 			/>
 		</form>
 	);
