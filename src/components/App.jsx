@@ -3,41 +3,39 @@ import '../App.css';
 import NoTodos from './NoTodos';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 function App() {
-	const [name, setName] = useState('');
-
-	// Add useRef hook to reference the name input field/DOM element
-	const nameInputElement = useRef(null);
+	// Use custom hook for username in localStorage
+	const [name, setName] = useLocalStorage('name', '');
 
 	const addName = (event) => {
 		// Prevent adding of empty strings and whitespaces
 		if (event.target.value.trim().length === 0) {
 			return name;
 		}
+		// localStorage.setItem('name', JSON.stringify(event.target.value));
 		return setName(event.target.value);
 	};
 
-	const handleEscape = () => {
-		return name;
-	};
+	const [todos, setTodos] = useLocalStorage('todos', []);
+	// const [todos, setTodos] = useState([
+	// {
+	// 	id: 1,
+	// 	title: 'Example item 1',
+	// 	isComplete: false,
+	// 	isEditing: false,
+	// },
+	// {
+	// 	id: 2,
+	// 	title: 'Example item 2',
+	// 	isComplete: true,
+	// 	isEditing: false,
+	// },
+	// ]);
 
-	const [todos, setTodos] = useState([
-		// {
-		// 	id: 1,
-		// 	title: 'Example item 1',
-		// 	isComplete: false,
-		// 	isEditing: false,
-		// },
-		// {
-		// 	id: 2,
-		// 	title: 'Example item 2',
-		// 	isComplete: true,
-		// 	isEditing: false,
-		// },
-	]);
-
-	const [todoId, setTodoId] = useState(3);
+	const [todoId, setTodoId] = useLocalStorage('id', 1);
+	// const [todoId, setTodoId] = useState(3);
 
 	const addTodo = (titleString) => {
 		setTodos([
@@ -143,10 +141,16 @@ function App() {
 		}
 	};
 
+	// Add useRef hook to reference the name input field/DOM element
+	const nameInputElement = useRef(null);
+
 	// Add useEffect hook to immediately focus the name input field
 	// when the component mounts by adding [] to the DependencyList
 	useEffect(() => {
 		nameInputElement.current.focus();
+
+		// Also add the username from localStorage
+		// setName(JSON.parse(localStorage.getItem('name')) ?? '');
 	}, []);
 
 	const [featuresVisible, setFeaturesVisible] = useState(false);
@@ -172,7 +176,7 @@ function App() {
 								autoFocus
 								ref={nameInputElement}
 								onKeyDown={(event) => {
-									//Commit new values when pressing Enter
+									// Commit new values when pressing Enter
 									if (event.key === 'Enter') {
 										addName(event);
 									}
